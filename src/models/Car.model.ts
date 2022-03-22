@@ -4,6 +4,7 @@ export interface CarInput {
   name?: string;
   color?: string;
   age?: number;
+  licencePlate?: string;
 }
 
 const CarSchema = new mongoose.Schema(
@@ -15,6 +16,14 @@ const CarSchema = new mongoose.Schema(
       required: [true, "age is required"],
       min: [0, "age must be positive"],
       max: [40, "age must be less than 40"],
+    },
+    licencePlate: {
+      type: String,
+      required: true,
+      validate: {
+        validator: (licencePlate: string) => licencePlate.length < 2,
+        message: "licencePlate length must be less than 2",
+      },
     },
   },
   { timestamps: true }
