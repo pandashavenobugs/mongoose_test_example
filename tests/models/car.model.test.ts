@@ -15,8 +15,10 @@ describe("connecting to db and testting the CarModel crud", () => {
       name: "test car",
       color: "red",
       age: 10,
+      licencePlate: "A",
     };
     const createdCar = await CarModel.create(car);
+    // console.log(error!);
     expect(createdCar._id).toBeDefined();
   });
 
@@ -75,6 +77,27 @@ describe("connecting to db and testting the CarModel crud", () => {
       value: car.age,
       message: "age must be positive",
       name: "ValidatorError",
+    });
+  });
+
+  it("custom licencePlate validator", async () => {
+    const car: CarInput = {
+      name: "test car",
+      color: "red",
+      age: 10,
+      licencePlate: "ABC",
+    };
+    const createdCar = new CarModel({
+      ...car,
+    });
+    const error = createdCar.validateSync();
+    //console.log(error!);
+    const { licencePlate } = error!.errors;
+    expect(licencePlate).toMatchObject({
+      path: "licencePlate",
+      message: "licencePlate length must be less than 2",
+      value: car.licencePlate,
+      kind: "user defined",
     });
   });
 });
