@@ -8,7 +8,7 @@ export async function connectToDB() {
       dbName,
       autoCreate: true,
     });
-    console.log("DB connected");
+    // console.log("DB connected");
   } catch (error) {
     console.log("DB connect error");
   }
@@ -17,7 +17,7 @@ export async function connectToDB() {
 export async function disconnectDB() {
   try {
     await mongoose.connection.close();
-    console.log("db disconnected");
+    // console.log("db disconnected");
   } catch (error) {
     console.log("db disconnect error");
   }
