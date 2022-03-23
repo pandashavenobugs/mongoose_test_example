@@ -35,10 +35,35 @@ describe("connecting to db and testting the UserModel crud", () => {
     };
     fetchedUSer!.posts!.push({ ...postInput });
     const savedFetchedUser = await fetchedUSer!.save();
-    const savedPost = savedFetchedUser!.posts![0];
-
+    const childPost = savedFetchedUser!.posts!.id(
+      savedFetchedUser!.posts![0]._id
+    );
     expect(savedFetchedUser!.posts!.length).toBeGreaterThan(0);
     expect(savedFetchedUser!.posts![0]._id).toBeDefined();
+    expect(childPost).toBeDefined();
     // const newPostC = PostModel.create({ ...postInput });
+  });
+
+  it("nested PostSchema update test", async () => {
+    const userInput: UserInput = {
+      name: "userTest",
+    };
+    const user = new UserModel({ ...userInput });
+    const postInput: PostInput = {
+      title: "postTest",
+    };
+    user!.posts!.push({ ...postInput });
+    const newUSer = await user.save();
+    const post = newUSer!.posts![0];
+
+    const childPost = newUSer!.posts!.id(post._id);
+    // childPost!.title = "deneme";
+    childPost!.set({ title: "test" });
+    const index = newUSer!.posts!.indexOf(childPost!);
+    console.log(index);
+    await newUSer!.save();
+    console.log(newUSer!);
+    const fetchedUSer = await UserModel.findOne({ _id: newUSer._id });
+    console.log(fetchedUSer!);
   });
 });
