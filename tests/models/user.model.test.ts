@@ -24,7 +24,7 @@ describe("connecting to db and testting the UserModel crud", () => {
     const newUSer = await user.save();
     expect(newUSer._id).toBeDefined();
   });
-  it("PostSchema nested  create test", async () => {
+  it("PostSchema Array nested  create test", async () => {
     const userInput: UserInput = {
       name: "userTest",
     };
@@ -46,7 +46,7 @@ describe("connecting to db and testting the UserModel crud", () => {
   });
   // we have 2 ways to update the nestedDocuments
   // 1st way
-  it("nested PostSchema update test in 1st way", async () => {
+  it("nested PostSchema Array update test in 1st way", async () => {
     const userInput: UserInput = {
       name: "userTest",
     };
@@ -80,7 +80,7 @@ describe("connecting to db and testting the UserModel crud", () => {
     const updatedNestedPost = updatedUser!.posts!.id(postFetchedFromPosts!._id);
     expect(updatedNestedPost!.title).toEqual("postTitle changed in 1st way");
   });
-  it("nested PostSchema update test in 2nd way", async () => {
+  it("nested PostSchema Array update test in 2nd way", async () => {
     const userInput: UserInput = {
       name: "userTest",
     };
