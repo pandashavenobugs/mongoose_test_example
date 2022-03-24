@@ -113,4 +113,22 @@ describe("connecting to db and testting the UserModel crud", () => {
     // console.log(updatedNestedPost);
     expect(updatedNestedPost!.title).toEqual("postTitle changed in 2nd way");
   });
+  it("deleting an element from nested PostSchema Array Test", async () => {
+    const userInput: UserInput = {
+      name: "userTest",
+    };
+    const user = new UserModel({ ...userInput });
+    const postInput: PostInput = {
+      title: "postTest",
+    };
+    user!.posts!.push({ ...postInput });
+    const newUSer = await user.save();
+    const fetchedNewUser = await UserModel.findOne({ _id: newUSer._id });
+    const postAsNestedDocument = fetchedNewUser!.posts![0];
+    fetchedNewUser!.posts!.id(postAsNestedDocument._id)!.remove();
+    await fetchedNewUser!.save();
+    // console.log(postFetchedFromPosts!.$isEmpty);
+    // console.log(fetchedNewUser!.posts!);
+    expect(fetchedNewUser!.posts!.length).toEqual(0);
+  });
 });
