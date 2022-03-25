@@ -22,6 +22,7 @@ describe("connecting to db and testting the UserModel crud", () => {
     };
     const user = new UserModel({ ...userInput });
     const newUSer = await user.save();
+
     expect(newUSer._id).toBeDefined();
   });
   it("PostSchema Array nested  create test", async () => {
@@ -130,5 +131,20 @@ describe("connecting to db and testting the UserModel crud", () => {
     // console.log(postFetchedFromPosts!.$isEmpty);
     // console.log(fetchedNewUser!.posts!);
     expect(fetchedNewUser!.posts!.length).toEqual(0);
+  });
+  it("User Virtual Test", async () => {
+    const userInput: UserInput = {
+      name: "userTest",
+    };
+    const user = new UserModel({ ...userInput });
+    const newUSer = await user.save();
+    const fetchedUSer = await UserModel.findOne({ _id: newUSer._id });
+    const postInput: PostInput = {
+      title: "postTest",
+    };
+    fetchedUSer!.posts!.push({ ...postInput });
+    const savedFetchedUser = await fetchedUSer!.save();
+
+    expect(savedFetchedUser!.postCount).toEqual(1);
   });
 });
