@@ -7,10 +7,10 @@ export interface UserInput {
   posts?: mongoose.Types.DocumentArray<PostDocument>;
 }
 
-const UserSchema = new mongoose.Schema(
+const UserSchema = new mongoose.Schema<UserDocument>(
   {
     name: { type: String, required: true },
-    postCount: { type: Number, default: 0 },
+    // postCount: { type: Number, default: 0 },
     posts: [SubPostSchema],
   },
   {
@@ -18,11 +18,14 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
+UserSchema.virtual("postCount").get(function (this: UserDocument): Number {
+  return this.posts ? this.posts.length : 0;
+});
 export interface UserDocument extends UserInput, mongoose.Document {
   updateAt: Date;
   createdAt: Date;
 }
 
-const UserModel = mongoose.model<UserDocument>("User", UserSchema);
+const UserModel = mongoose.model("User", UserSchema);
 
 export default UserModel;
