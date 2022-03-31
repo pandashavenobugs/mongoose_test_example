@@ -1,10 +1,16 @@
 import mongoose from "mongoose";
-import { PostSchema, PostDocument, SubPostSchema } from "./Post.model";
+import {
+  PostSchema,
+  PostDocument,
+  SubPostSchema,
+  PostInput,
+} from "./Post.model";
 
 export interface UserInput {
   name: string;
   postCount?: number;
-  posts?: mongoose.Types.DocumentArray<PostDocument>;
+  // posts?: mongoose.Types.DocumentArray<PostDocument>;
+  posts?: PostInput[];
 }
 
 const UserSchema = new mongoose.Schema<UserDocument>(
@@ -21,9 +27,13 @@ const UserSchema = new mongoose.Schema<UserDocument>(
 UserSchema.virtual("postCount").get(function (this: UserDocument): Number {
   return this.posts ? this.posts.length : 0;
 });
-export interface UserDocument extends UserInput, mongoose.Document {
+export interface UserDocument
+  extends Omit<UserInput, "posts" | "postCount">,
+    mongoose.Document {
   updateAt: Date;
   createdAt: Date;
+  posts?: mongoose.Types.DocumentArray<PostDocument>;
+  postCount?: number;
 }
 
 const UserModel = mongoose.model("User", UserSchema);
