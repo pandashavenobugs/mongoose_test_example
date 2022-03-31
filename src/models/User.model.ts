@@ -27,6 +27,9 @@ const UserSchema = new mongoose.Schema<UserDocument>(
 UserSchema.virtual("postCount").get(function (this: UserDocument): Number {
   return this.posts ? this.posts.length : 0;
 });
+// if we want to omit types more than one
+//Omit<UserInput, "posts" | "postCount">
+// if we want to omit a type  we can use Omit<UserInput, "posts" >
 export interface UserDocument
   extends Omit<UserInput, "posts" | "postCount">,
     mongoose.Document {
