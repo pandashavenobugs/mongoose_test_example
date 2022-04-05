@@ -45,6 +45,24 @@ describe("connecting to db and testting the UserModel crud", () => {
     expect(childPost).toBeDefined();
     // const newPostC = PostModel.create({ ...postInput });
   });
+  it("PostSchema nested array create 2nd way", async () => {
+    const posts: PostInput[] = [
+      {
+        title: "1",
+      },
+      {
+        title: "2",
+      },
+    ];
+    const userInput: UserInput = {
+      name: "UserTest",
+      posts: posts,
+    };
+    const user = new UserModel({ ...userInput });
+    const createdUser = await user.save();
+    console.log(createdUser);
+    console.log(typeof createdUser);
+  });
   // we have 2 ways to update the nestedDocuments
   // 1st way
   it("nested PostSchema Array update test in 1st way", async () => {
