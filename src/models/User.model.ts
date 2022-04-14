@@ -38,9 +38,9 @@ export interface UserDocument
     mongoose.Document {
   updateAt: Date;
   createdAt: Date;
-  posts?: mongoose.Types.DocumentArray<PostDocument>;
-  postCount?: number;
-  blogPosts?: [Types.ObjectId];
+  posts: mongoose.Types.DocumentArray<PostDocument>;
+  postCount: number;
+  blogPosts: [Types.ObjectId];
 }
 
 const UserModel = mongoose.model("User", UserSchema);
