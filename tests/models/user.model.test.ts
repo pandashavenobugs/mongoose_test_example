@@ -8,7 +8,7 @@ import PostModel, { PostInput } from "../../src/models/Post.model";
 
 //https://stackoverflow.com/questions/26156687/mongoose-find-update-subdocument
 
-describe("connecting to db and testting the UserModel crud", () => {
+describe("connecting to db and testing the UserModel crud", () => {
   beforeAll(async () => {
     await connectToDB();
   });
@@ -60,8 +60,8 @@ describe("connecting to db and testting the UserModel crud", () => {
     };
     const user = new UserModel({ ...userInput });
     const createdUser = await user.save();
-    console.log(createdUser);
-    console.log(typeof createdUser);
+    // console.log(createdUser);
+    // console.log(typeof createdUser);
   });
   // we have 2 ways to update the nestedDocuments
   // 1st way
