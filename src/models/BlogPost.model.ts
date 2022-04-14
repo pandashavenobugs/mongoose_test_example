@@ -8,9 +8,9 @@ export interface BlogPostInput {
 export interface BlogPostDocument
   extends Document,
     Omit<BlogPostInput, "comments"> {
-  comments?: [Types.ObjectId];
-  createdAt?: Date;
-  updatedAt?: Date;
+  comments: [Types.ObjectId];
+  createdAt: Date;
+  updatedAt: Date;
 }
 export const BlogPostSchema = new Schema<BlogPostDocument>(
   {
