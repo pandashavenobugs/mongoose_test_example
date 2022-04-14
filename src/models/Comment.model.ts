@@ -7,7 +7,7 @@ export interface CommentInput {
 
 export interface CommentDocument extends Document, Omit<CommentInput, "user"> {
   content: string;
-  user: Schema.Types.ObjectId;
+  user: Types.ObjectId;
   createdAt?: Date;
   updatedAt?: Date;
 }
