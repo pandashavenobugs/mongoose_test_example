@@ -3,7 +3,7 @@ import mongoose, { Document, Schema, model, Types } from "mongoose";
 export interface BlogPostInput {
   title: string;
   content: string;
-  comments: string[];
+  comments?: string[];
 }
 export interface BlogPostDocument
   extends Document,
