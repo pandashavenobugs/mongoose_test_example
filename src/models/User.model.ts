@@ -1,9 +1,5 @@
-import mongoose from "mongoose";
-import {
-  BlogPostDocument,
-  BlogPostInput,
-  BlogPostSchema,
-} from "./BlogPost.model";
+import mongoose, { Types, Schema } from "mongoose";
+import { BlogPostDocument } from "./BlogPost.model";
 import {
   PostSchema,
   PostDocument,
@@ -16,7 +12,7 @@ export interface UserInput {
   postCount?: number;
   // posts?: mongoose.Types.DocumentArray<PostDocument>;
   posts?: PostInput[];
-  blogPosts?: BlogPostInput[];
+  blogPosts?: string[];
 }
 
 const UserSchema = new mongoose.Schema<UserDocument>(
@@ -24,7 +20,7 @@ const UserSchema = new mongoose.Schema<UserDocument>(
     name: { type: String, required: true },
     // postCount: { type: Number, default: 0 },
     posts: [PostSchema],
-    blogPosts: [BlogPostSchema],
+    blogPosts: [{ type: Schema.Types.ObjectId, ref: "BlogPost" }],
   },
   {
     timestamps: true,
@@ -44,7 +40,7 @@ export interface UserDocument
   createdAt: Date;
   posts?: mongoose.Types.DocumentArray<PostDocument>;
   postCount?: number;
-  blogPosts?: mongoose.Types.DocumentArray<BlogPostDocument>;
+  blogPosts?: [Types.ObjectId];
 }
 
 const UserModel = mongoose.model("User", UserSchema);
