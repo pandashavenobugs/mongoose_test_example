@@ -63,5 +63,22 @@ describe("connecting to db and testing the UserModel associations", () => {
       });
       expect(fetchedComments!.length).toEqual(50);
     }
+    // delete blogPost from user
+    const blogPostId = fetchedBlogPosts![0]._id;
+
+    await UserModel.updateOne(
+      { blogPosts: blogPostId },
+      {
+        $pull: { blogPosts: blogPostId },
+      }
+    );
+    await CommentModel.deleteMany({
+      _id: { $in: fetchedBlogPosts[0]!.comments },
+    });
+    const newFetchedUser = await UserModel.findOne({ _id: user!._id });
+    const newFetchedComments = await CommentModel.find();
+    expect(newFetchedUser!.blogPosts.length).toEqual(1);
+    expect(newFetchedComments.length!).toEqual(50);
+    // console.log(newFetchedUser!);
   });
 });
